@@ -2,9 +2,9 @@
 
 <p>This component demonstrates fetching data from the server.</p>
 
-<p *ngIf="!forecasts"><em>Loading...</em></p>
+<p *ngIf="!car"><em>Loading...</em></p>
 
-<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="forecasts">
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="car">
   <thead>
     <tr>
       <th>Merk</th>
@@ -13,10 +13,10 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let forecast of forecasts">
-      <td>{{ forecast.merk }}</td>
-      <td>{{ forecast.model }}</td>
-      <td>{{ forecast.bouwjaar }}</td>
+    <tr *ngFor="let c of car">
+      <td>{{ c.merk }}</td>
+      <td>{{ c.model }}</td>
+      <td>{{ c.bouwjaar }}</td>
     </tr>
   </tbody>
 </table>
