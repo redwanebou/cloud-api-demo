@@ -11,9 +11,8 @@ namespace AutoAPI.Controllers
     [Route("api/[controller]")]
     public class AutoController : ControllerBase
     {
-        [Route("ford")]
         [HttpGet]
-        public List<Car> GetPerson()
+        public List<Car> GetCar()
         {
             var lijst = new List<Car>();
 
@@ -21,8 +20,25 @@ namespace AutoAPI.Controllers
             {
                 Merk = "Ford",
                 Model = "Focus",
-                Bouwjaar = 2002
-            }); ;
+                Bouwjaar = 2002,
+                Brandstof = "Diesel"
+            });;
+
+            lijst.Add(new Car()
+            {
+                Merk = "Fiat",
+                Model = "Punto",
+                Bouwjaar = 2012,
+                Brandstof = "Diesel"
+            });;
+
+            lijst.Add(new Car()
+            {
+                Merk = "Volkswagen",
+                Model = "Polo",
+                Bouwjaar = 2012,
+                Brandstof = "Diesel"
+            });;
             return lijst;
         }
     }
