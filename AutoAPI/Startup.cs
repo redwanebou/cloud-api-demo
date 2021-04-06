@@ -21,6 +21,8 @@ namespace AutoAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            // USING Microsoft.AspNetCore.Mvc.NewtonsoftJson
+            services.AddControllers().AddNewtonsoftJson();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
