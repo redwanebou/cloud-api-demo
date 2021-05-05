@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
@@ -20,6 +21,17 @@ namespace AutoAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // 1. Add Authentication Services
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = "https://rcloud.eu.auth0.com/";
+                options.Audience = "http://localhost:17304/";
+            });
+
             services.AddControllersWithViews();
             // USING Microsoft.AspNetCore.Mvc.NewtonsoftJson
             services.AddControllers().AddNewtonsoftJson();
@@ -61,6 +73,10 @@ namespace AutoAPI
             }
 
             app.UseRouting();
+
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

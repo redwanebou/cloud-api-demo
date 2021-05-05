@@ -10,18 +10,28 @@
 </div>
 
 <form>
+
   <div class="form-group">
-    <label for="exampleFormControlInput1">Merk</label>
-    <input #m1 type="text" class="form-control" id="input1" placeholder="Merk">
+    <label for="exampleFormControlSelect1">Merk</label>
+    <select #m1 class="form-control" id="exampleFormControlSelect1" (change)="CheckMerk(m1.value)">
+      <option></option>
+      <option *ngFor="let showme of service.Opslag">{{showme.marque}}</option>
+    </select>
   </div>
-  <div class="form-group">
-    <label for="exampleFormControlInput1">Model</label>
-    <input #m2 type="text" class="form-control" id="input2" placeholder="Model">
+
+  <div *ngIf="id != 0 && existmodel()" class="form-group">
+    <label for="exampleFormControlSelect2">Model</label>
+    <select #m2 class="form-control" id="exampleFormControlSelect2" (change)="CheckModel(m2.value)">
+      <option></option>
+      <option *ngFor="let showme of service.Opslag2">{{showme.modele}}</option>
+    </select>
   </div>
+
   <div class="form-group">
     <label for="exampleFormControlInput1">Bouwjaar</label>
     <input #bj type="number" class="form-control" id="input3" placeholder="Bouwjaar">
   </div>
+
   <div class="form-group">
     <label for="exampleFormControlSelect2">Brandstof</label>
     <select #fuel multiple class="form-control" id="select1">
@@ -32,13 +42,12 @@
       <option>Hybride</option>
     </select>
   </div>
-  <button (click)="SendPost(m1.value,m2.value,bj.value,fuel.value.toString())" type="button" class="btn btn-primary">Verzenden</button>
+  <button (click)="SendPost(bj.value,fuel.value.toString())" type="button" class="btn btn-primary">Verzenden</button>
 </form>
 
 <p *ngIf="!car"><em>Laden...</em></p>
 
 <p *ngIf="car">Hieronder vind je een overzicht van al je gemaakte auto's</p>
-
 <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="car">
   <thead>
     <tr>
@@ -50,7 +59,9 @@
   </thead>
   <tbody>
     <tr *ngFor="let c of car">
-      <td>{{ c.merk }}</td>
+      <td>
+        {{ c.merk }}
+      </td>
       <td>{{ c.model }}</td>
       <td>{{ c.bouwjaar }}</td>
       <td>{{ c.brandstof }}</td>

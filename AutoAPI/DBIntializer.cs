@@ -18,9 +18,9 @@ namespace AutoAPI
                 // Create new car
                 var cr = new Car()
                 {
-                    Merk = "First",
-                    Model = "Car",
-                    Bouwjaar = 7777,
+                    Merk = "OPEL",
+                    Model = "ASTRA",
+                    Bouwjaar = 2021,
                     Brandstof = "Diesel"
                 };
 

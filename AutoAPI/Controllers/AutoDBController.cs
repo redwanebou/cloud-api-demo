@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -106,6 +107,7 @@ namespace AutoAPI.Controllers
         }
 
         // UPDATE A CAR
+        [Authorize]
         [HttpPut]
         public IActionResult UpdateCar([FromBody] Car updateCar)
         {

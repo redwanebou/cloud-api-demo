@@ -20,12 +20,14 @@
         [ngClass]="{ show: isExpanded }"
       >
         <ul class="navbar-nav flex-grow">
-          <li
-            class="nav-item"
-            [routerLinkActive]="['link-active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
+          <li class="nav-item"
+              [routerLinkActive]="['link-active']"
+              [routerLinkActiveOptions]="{ exact: true }">
+            <a style="float:left" class="nav-link text-dark" [routerLink]="['/']">Home</a>
+            <!-- auth -->
+            <button style="float:left" *ngIf="!auth.loggedIn" (click)="auth.login()" type="button" class="btn btn-primary">Inloggen</button>
+
+            <b><a style="float:left" *ngIf="auth.loggedIn" class="nav-link text-dark" (click)="auth.logout()"> Uitloggen </a></b>
           </li>
         </ul>
       </div>
