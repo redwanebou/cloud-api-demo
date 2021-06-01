@@ -1,0 +1,17 @@
+<p *ngIf="!http.persoon"><em>Laden...</em></p>
+<ng-template [ngIf]="http.persoon">
+  <h1 id="tableLabel">Geld opwaarderen</h1>
+  <div *ngIf="status == 1" class="alert alert-danger" role="alert">
+    Je moet een bedrag invullen
+  </div>
+  <div *ngIf="status == 2" class="alert alert-success" role="alert">
+    Bedrag is succesvol toegevoegd
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Bedrag</label>
+    <input #geld type="number" class="form-control" id="input1" placeholder="Voer het bedrag in">
+  </div>
+
+  <button (click)="UpdateGeld(geld.value)" class="btn btn-info">Opwaarderen</button>
+
+</ng-template>

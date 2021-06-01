@@ -9,6 +9,9 @@
   Oeps.. Er is iets misgegaan
 </div>
 
+<div *ngIf="status == 3" class="alert alert-danger" role="alert">
+  Je moet inloggen om een auto aan te kunnen maken
+</div>
 <form>
 
   <div class="form-group">
@@ -42,29 +45,11 @@
       <option>Hybride</option>
     </select>
   </div>
-  <button (click)="SendPost(bj.value,fuel.value.toString())" type="button" class="btn btn-primary">Verzenden</button>
+
+  <div class="form-group">
+    <label for="exampleFormControlInput2">Prijs</label>
+    <input #prijs type="number" class="form-control" id="input4" placeholder="Prijs">
+  </div>
+
+  <button (click)="SendPost(prijs.value,bj.value,fuel.value.toString())" type="button" class="btn btn-primary">Verzenden</button>
 </form>
-
-<p *ngIf="!car"><em>Laden...</em></p>
-
-<p *ngIf="car">Hieronder vind je een overzicht van al je gemaakte auto's</p>
-<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="car">
-  <thead>
-    <tr>
-      <th>Merk</th>
-      <th>Model</th>
-      <th>Bouwjaar</th>
-      <th>Brandstof</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let c of car">
-      <td>
-        {{ c.merk }}
-      </td>
-      <td>{{ c.model }}</td>
-      <td>{{ c.bouwjaar }}</td>
-      <td>{{ c.brandstof }}</td>
-    </tr>
-  </tbody>
-</table>

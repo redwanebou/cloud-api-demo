@@ -6,22 +6,27 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
+using System;
+using System.Reflection;
+using System.IO;
 
 namespace AutoAPI
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly string swaggerBasePath = "api";
+        private readonly IWebHostEnvironment env;
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            this.env = env;
         }
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // 1. Add Authentication Services
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -29,31 +34,68 @@ namespace AutoAPI
             }).AddJwtBearer(options =>
             {
                 options.Authority = "https://rcloud.eu.auth0.com/";
-                options.Audience = "http://localhost:17304/";
+                options.Audience = "https://rcloud.eu.auth0.com/api/v2/";
             });
 
             services.AddControllersWithViews();
-            // USING Microsoft.AspNetCore.Mvc.NewtonsoftJson
-            services.AddControllers().AddNewtonsoftJson();
-            // In production, the Angular files will be served from this directory
+            services.AddControllers()
+            .AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "AutoAPI",
+                    Description = "Documentatie over AutoAPI"
+                });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
+            });
+
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            // DATABASE
-            services.AddDbContext<CarContext>(
-               options => options.UseSqlServer(
-                   Configuration.GetConnectionString("DefaultConnection")
-                   )
-               );
+            // DATABASE bovenste is Development en onderste Production
+            if (env.IsDevelopment())
+            {
+                services.AddDbContext<MyDBContext>(
+                   options => options.UseSqlServer(
+                       Configuration.GetConnectionString("DefaultConnection")
+                       )
+                   );
+            }
+            else
+            {
+                services.AddDbContext<MyDBContext>(
+                   options => options.UseSqlServer(
+                       Configuration.GetConnectionString("DefaultConnection")
+                       )
+                   );
+            }
+            
             services.AddMvc();
             services.AddCors();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, CarContext carC)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MyDBContext carC)
         {
+            app.UseSwagger(c =>
+            {
+                c.RouteTemplate = swaggerBasePath + "/swagger/{documentName}/swagger.json";
+            });
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint($"/{swaggerBasePath}/swagger/v1/swagger.json", "AutoAPI");
+                c.RoutePrefix = $"{swaggerBasePath}";
+            });
+
             // DATABASE
             DBIntializer.Initialize(carC);
 
@@ -74,7 +116,6 @@ namespace AutoAPI
 
             app.UseRouting();
 
-
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -87,9 +128,6 @@ namespace AutoAPI
 
             app.UseSpa(spa =>
             {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
-
                 spa.Options.SourcePath = "ClientApp";
 
                 if (env.IsDevelopment())

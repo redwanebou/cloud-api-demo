@@ -5,14 +5,17 @@ import {from, of, Observable, BehaviorSubject, combineLatest, throwError} from '
 import {tap, catchError, concatMap, shareReplay} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import { OwnAPI } from '../ownapi/ownapi.service';
-import { authtokenS } from '../auth-token/auth-token.service';
+import { Person } from '../ownapi/models/person.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   CLIENTID: string = 'haF4FN45jjIZCEHSC1yj3Dt6Tk4uPBDv'
-  // From Auth0 Quick Start Guide & Modified Few Lines
+  public client: Auth0Client;
+  Information: any;
+  pr: Person;
+  
   auth0Client$ = (from(
     createAuth0Client({
       domain: 'rcloud.eu.auth0.com',
@@ -29,7 +32,7 @@ export class AuthService {
     tap(res => {
       this.loggedIn = res;
       if (this.loggedIn == true) {
-        this.ApiService.GetToken(); // GET TOKEN
+        this.userProfile$.subscribe(r => { this.Information = r; this.CreateUserinDB() });
       }
     })
   );
@@ -42,10 +45,22 @@ export class AuthService {
 
   loggedIn: boolean = null;
 
-  constructor(private router: Router, private ApiService: OwnAPI, private token: authtokenS) {
+  constructor(private router: Router, private ApiService: OwnAPI) {
     this.localAuthSetup();
-
     this.handleAuthCallback();
+  }
+
+  CreateUserinDB() {
+    if (this.Information != null) {
+     this.pr = {
+      user_id: this.Information.sub,
+      email: this.Information.email,
+      nickname: this.Information.nickname,
+      geld: 0 // default waarde
+      }
+      this.ApiService.GetToken(this.pr); // GET TOKEN
+      this.ApiService.GetPerson(this.Information.sub, this.pr);
+    }
   }
 
   getUser$(options?): Observable<any> {
@@ -81,12 +96,11 @@ export class AuthService {
     const params = window.location.search;
     if (params.includes('code=') && params.includes('state=')) {
       let targetRoute: string;
-
       // LETS FIND THE AUTH CODE
-      let CUTCODE = params.match('code').input.substring(6)
-      let CLIENTCODE = CUTCODE.substring(0, 16)
-      // pass the code
-      this.token.CLIENTCODE = CLIENTCODE
+     // let CUTCODE = params.match('code').input.substring(6)
+      //let CLIENTCODE = CUTCODE.substring(0, 16)
+      // WE NEED THIS CODE FOR /USERINFO
+      //this.ApiService.USERTOKEN = CLIENTCODE;
 
       const authComplete$ = this.handleRedirectCallback$.pipe(
         tap(cbRes => {

@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AutoAPI</name>
+    </assembly>
+    <members>
+        <member name="M:AutoAPI.Controllers.AutoController.GetAllCars(System.String,System.String,System.Int32,System.String,System.String,System.String)">
+            <summary>
+            Ontvang alle autos.
+            </summary>
+            <response code="200">Autos gevonden.</response>
+            <response code="404">Autos niet gevonden.</response>
+            <response code="500">De server heeft een onbekende fout aangetroffen.</response>
+        </member>
+        <member name="M:AutoAPI.Controllers.AutoController.CreateCar(AutoAPI.Car)">
+            <summary>
+            Maak een auto aan.
+            </summary>
+            <response code="200">Auto aangemaakt.</response>
+            <response code="401">Niet geautoriseerd om een auto te creëren.</response>
+            <response code="500">De server heeft een onbekende fout aangetroffen.</response>
+        </member>
+        <member name="M:AutoAPI.Controllers.AutoController.GetCar(System.Int32)">
+            <summary>
+            Zoek een auto via ID.
+            </summary>
+            <response code="200">Auto gevonden.</response>
+            <response code="404">Auto niet gevonden.</response>
+            <response code="500">De server heeft een onbekende fout aangetroffen.</response>
+        </member>
+        <member name="M:AutoAPI.Controllers.AutoController.DeleteCar(System.Int32)">
+            <summary>
+            Verwijder een auto via ID.
+            </summary>
+            <response code="200">Auto verwijderd.</response>
+            <response code="404">Auto niet gevonden.</response>
+            <response code="401">Niet geautoriseerd om een auto te verwijderen.</response>
+            <response code="500">De server heeft een onbekende fout aangetroffen.</response>
+        </member>
+        <member name="M:AutoAPI.Controllers.AutoController.UpdateCar(AutoAPI.Car)">
+            <summary>
+            Update een auto.
+            </summary>
+            <response code="200">Auto succesvol geupdate.</response>
+            <response code="404">Auto niet gevonden.</response>
+            <response code="401">Niet geautoriseerd om een auto te update.</response>
+            <response code="500">De server heeft een onbekende fout aangetroffen.</response>
+        </member>
+        <member name="M:AutoAPI.Controllers.MerkController.GetAllMerk(System.String,System.String,System.String)">
+            <summary>
+            Ontvang alle merken.
+            </summary>
+            <response code="200">Merken gevonden.</response>
+            <response code="404">Merken niet gevonden.</response>
+            <response code="500">De server heeft een onbekende fout aangetroffen.</response>
+        </member>
+        <member name="M:AutoAPI.Controllers.MerkController.GetMerk(System.Int32)">
+            <summary>
+            Zoek een merk via ID.
+            </summary>
+            <response code="200">Merk gevonden.</response>
+            <response code="404">Merk niet gevonden.</response>
+            <response code="500">De server heeft een onbekende fout aangetroffen.</response>
+        </member>
+        <member name="M:AutoAPI.Controllers.ModelController.GetAllModel(System.String,System.String,System.String)">
+            <summary>
+            Ontvang alle modellen.
+            </summary>
+            <response code="200">Modellen gevonden.</response>
+            <response code="404">Modellen niet gevonden.</response>
+            <response code="500">De server heeft een onbekende fout aangetroffen.</response>
+        </member>
+        <member name="M:AutoAPI.Controllers.ModelController.GetMerk(System.Int32)">
+            <summary>
+            Zoek een model via ID.
+            </summary>
+            <response code="200">Model gevonden.</response>
+            <response code="404">Model niet gevonden.</response>
+            <response code="500">De server heeft een onbekende fout aangetroffen.</response>
+        </member>
+        <member name="M:AutoAPI.Controllers.PersonController.GetAllPerson(System.String,System.String,System.String)">
+            <summary>
+            Ontvang alle personen.
+            </summary>
+            <response code="200">Personen gevonden.</response>
+            <response code="404">Personen niet gevonden.</response>
+            <response code="500">De server heeft een onbekende fout aangetroffen.</response>
+        </member>
+        <member name="M:AutoAPI.Controllers.PersonController.CreatePerson(AutoAPI.Models.Person)">
+            <summary>
+            Maak een persoon aan.
+            </summary>
+            <response code="200">Persoon aangemaakt.</response>
+            <response code="401">Niet geautoriseerd om een persoon te creëren.</response>
+            <response code="500">De server heeft een onbekende fout aangetroffen.</response>
+        </member>
+        <member name="M:AutoAPI.Controllers.PersonController.UpdatePerson(AutoAPI.Models.Person)">
+            <summary>
+            Update een persoon.
+            </summary>
+            <response code="200">Persoon succesvol geupdate.</response>
+            <response code="404">Persoon niet gevonden.</response>
+            <response code="401">Niet geautoriseerd om een persoon te update.</response>
+            <response code="500">De server heeft een onbekende fout aangetroffen.</response>
+        </member>
+        <member name="M:AutoAPI.Controllers.PersonController.GetPerson(System.String)">
+            <summary>
+            Zoek een persoon via ID.
+            </summary>
+            <response code="200">Persoon gevonden.</response>
+            <response code="404">Persoon niet gevonden.</response>
+            <response code="500">De server heeft een onbekende fout aangetroffen.</response>
+        </member>
+    </members>
+</doc>

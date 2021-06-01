@@ -1,45 +1,66 @@
 import { Component, Inject } from '@angular/core';
-import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { GetCarService } from '../services/getcar/getcar.service';
 import { GetCarHttpService } from '../services/getcar/getcar-http.service';
 import { OwnAPI } from '../services/ownapi/ownapi.service';
+import { AuthService } from '../services/auth/auth.service';
+import { Person } from '../services/ownapi/models/person.model';
+import { Car } from '../services/ownapi/models/car.model';
+import { Model } from '../services/ownapi/models/model.model';
+import { Merk } from '../services/ownapi/models/merk.model';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html'
 })
 export class HomeComponent  {
-  public car: Auto[];
   status: number;
   year: number = new Date().getFullYear();
   id: number = 0;
   merk: string;
   model: string;
 
-  constructor(private http: HttpClient, private http0: OwnAPI, @Inject('BASE_URL') private baseUrl: string, public service: GetCarService, public http1: GetCarHttpService) {
-    this.Merk()
-    http.get<Auto[]>(baseUrl + 'api/autodb').subscribe(result => {
-      this.car = result;
-    }, error => console.error(error));
+  constructor(public http: OwnAPI, public service: GetCarService, public http1: GetCarHttpService, private http2: AuthService) {
+    this.Merk();
   }
 
-  SendPost(bouwjaar: number, brandstof: string) {
-    if (!isEmpty(this.merk) && !isEmpty(this.model) && this.model != "Geen Model" && bouwjaar > 1885 && bouwjaar < this.year + 1 && !isEmpty(brandstof)
-      || !isEmpty(this.merk) && this.service.Opslag2 == null && bouwjaar > 1885 && bouwjaar < this.year + 1 && !isEmpty(brandstof)) {
-      const data: Auto = {
-        merk: this.merk,
-        model: this.model,
-        bouwjaar: bouwjaar,
-        brandstof: brandstof
-      };
-     // const httpOptions = {
-      //  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-      //}
-     // this.http.post(this.baseUrl + 'api/autodb', JSON.stringify(data), httpOptions).subscribe();
+  SendPost(prijs:number, bouwjaar: number, brandstof: string) {
+    if (!isEmpty(this.merk) && !isEmpty(this.model) && this.model != "Geen Model" && bouwjaar > 1885 && bouwjaar < this.year + 1 && !isEmpty(brandstof) && prijs > 0
+      || !isEmpty(this.merk) && this.service.Opslag2 == null && bouwjaar > 1885 && bouwjaar < this.year + 1 && !isEmpty(brandstof) && prijs > 0) {
+      // SEND POST REQUEST
 
-      // MAKE AUTH REQUEST WITH JWT TOKEN
-      this.http0.PostAUTO(data).subscribe();
-      this.status = 2;
+      if (this.http2.Information) {
+        const mrk: Merk = {
+          naam: this.merk
+        }
+
+        const mdl: Model = {
+          naam: this.model,
+          merk: mrk
+        }
+        const pr: Person = {
+          user_id: this.http2.Information.sub,
+          email: this.http2.Information.email,
+          nickname: this.http2.Information.nickname,
+          geld: this.http.persoon.geld
+        }
+
+        const car: Car = {
+          bouwjaar: bouwjaar,
+          brandstof: brandstof,
+          prijs: prijs,
+          verkocht: false,
+          merk: mrk,
+          model: mdl,
+          person: pr
+        };
+
+        this.http.CreateCar(car).subscribe();
+        this.status = 2;
+      }
+      else {
+        // gebruiker niet ingelogd
+        this.status = 3;
+      }
     } else
       this.status = 1;
   }
@@ -81,11 +102,4 @@ export class HomeComponent  {
 
 function isEmpty(str) {
   return (!str || str.length === 0);
-}
-
-interface Auto {
-  merk: string;
-  model: string;
-  bouwjaar: number;
-  brandstof: string;
 }

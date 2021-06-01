@@ -1,0 +1,40 @@
+<p *ngIf="!http2.Information"><em>Laden...</em></p>
+<ng-template [ngIf]="http2.Information">
+  <div *ngIf="status == 1" class="alert alert-success" role="alert">
+    Je auto is succesvol verwijderd
+  </div>
+  <div *ngIf="status == 2" class="alert alert-danger" role="alert">
+    Je hebt te weinig geld
+  </div>
+  <div *ngIf="status == 3" class="alert alert-success" role="alert">
+    Je hebt succesvol de auto gekocht
+  </div>
+  <table class='table table-striped' aria-labelledby="tableLabel">
+    <thead>
+      <tr>
+        <th>Merk</th>
+        <th>Model</th>
+        <th>Bouwjaar</th>
+        <th>Brandstof</th>
+        <th>Prijs</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of http.car">
+        <td>
+          {{ c.merk.naam }}
+        </td>
+        <td>{{ c.model.naam }}</td>
+        <td>{{ c.bouwjaar }}</td>
+        <td>{{ c.brandstof }}</td>
+        <td>{{ c.prijs }}</td>
+        <td>
+          <button *ngIf="!CheckUser(c.person?.user_id) && !c.verkocht" (click)="BuyCar(c)" class="btn btn-info">Kopen</button>
+          <b *ngIf="c.verkocht" style="margin-right:3%">Gekocht</b>
+          <button *ngIf="CheckUser(c.person?.user_id)" (click)="DeleteCar(c.id)" class="btn btn-danger">Verwijderen</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</ng-template>

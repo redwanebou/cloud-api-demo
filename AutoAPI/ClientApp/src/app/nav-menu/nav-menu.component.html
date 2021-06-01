@@ -1,36 +1,52 @@
-<header>
-  <nav
-    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
-  >
-    <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">AutoAPI</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target=".navbar-collapse"
-        aria-label="Toggle navigation"
-        [attr.aria-expanded]="isExpanded"
-        (click)="toggle()"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div
-        class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
-        [ngClass]="{ show: isExpanded }"
-      >
-        <ul class="navbar-nav flex-grow">
-          <li class="nav-item"
-              [routerLinkActive]="['link-active']"
-              [routerLinkActiveOptions]="{ exact: true }">
-            <a style="float:left" class="nav-link text-dark" [routerLink]="['/']">Home</a>
-            <!-- auth -->
-            <button style="float:left" *ngIf="!auth.loggedIn" (click)="auth.login()" type="button" class="btn btn-primary">Inloggen</button>
+ <header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+      <div class="container">
+        <a class="navbar-brand" [routerLink]="['/']">AutoAPI</a>
+        <em *ngIf="auth.loggedIn" class="nav-link text-dark"> Welkom {{auth.Information.nickname}} </em>
+        <div *ngIf="auth.loggedIn">|</div>
+        <em *ngIf="auth.loggedIn" class="nav-link text-dark"> {{http.persoon?.geld}} euro </em>
+        <button class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target=".navbar-collapse"
+                aria-label="Toggle navigation"
+                [attr.aria-expanded]="isExpanded"
+                (click)="toggle()">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
+             [ngClass]="{ show: isExpanded }">
 
-            <b><a style="float:left" *ngIf="auth.loggedIn" class="nav-link text-dark" (click)="auth.logout()"> Uitloggen </a></b>
-          </li>
-        </ul>
+          <ul class="navbar-nav mr-flex">
+            <li class="nav-item"
+                [routerLinkActive]="['link-active']"
+                [routerLinkActiveOptions]="{ exact: true }">
+
+              <a class="nav-link" [routerLink]="['/']">Home</a>
+            </li>
+
+            <ng-template [ngIf]="auth.loggedIn">
+              <li class="nav-item"
+                  [routerLinkActive]="['link-active']"
+                  [routerLinkActiveOptions]="{ exact: true }">
+
+                <a class="nav-link" [routerLink]="['/geld']">Geld opwaarderen</a>
+              </li>
+
+              <li class="nav-item"
+                  [routerLinkActive]="['link-active']"
+                  [routerLinkActiveOptions]="{ exact: true }">
+
+                <a class="nav-link" [routerLink]="['/autos']">Autos</a>
+              </li>
+            </ng-template>
+
+            <li class="nav-item">
+              <button *ngIf="!auth.loggedIn" (click)="auth.login()" type="button" class="btn btn-primary">Inloggen</button>
+              <b><a *ngIf="auth.loggedIn" class="nav-link" (click)="auth.logout()">Uitloggen</a></b>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-  </nav>
-</header>
+    </nav>
+  </header>
