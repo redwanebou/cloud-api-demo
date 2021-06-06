@@ -5,6 +5,9 @@ pipeline {
     args '-p 3000:3000 -p 5000:5000'
     }
   }
+  environment {
+  CI = 'true'
+  }
   stages {
     stage('Npm Install') {
       steps {
@@ -16,22 +19,30 @@ pipeline {
     }
 
     stage('Build Production Mode') {
-      when {
+      sh echo "Building..."'
+     }
+
+
+    stage('Deploy to production enviroment'){
+     when {
             branch 'master'
        }
        steps {
           // cd "AutoAPI"/ClientApp
           // npm run "build"
-          sh 'echo "Building on master'
+          sh 'echo "Deploy on master branch'
        }
+     }
 
-       when {
-            branch 'TEST'
+
+    stage('Deploy to test enviroment'){
+     when {
+            branch 'test'
        }
        steps {
           // cd "AutoAPI"/ClientApp
           // npm run "build"
-          sh 'echo "Building on test'
+          sh 'echo "Deploy on test branch'
        }
      }
    }
