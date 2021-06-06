@@ -1,12 +1,12 @@
 pipeline {
   agent {
-    node {
-    image 'mcr.microsoft.com/dotnet/sdk'
-    args '-p 3000:3000 -p 5000:5000'
+    docker {
+      image 'mcr.microsoft.com/dotnet/sdk'
+      args '-p 3000:3000 -p 5000:5000'
     }
   }
   environment {
-  CI = 'true'
+    CI = 'true'
   }
   stages {
     stage('Npm Install') {
