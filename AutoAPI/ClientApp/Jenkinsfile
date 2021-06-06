@@ -1,24 +1,37 @@
 pipeline {
   agent {
-    node { label 'master' }
+    node {
+    image 'mcr.microsoft.com/dotnet/sdk'
+    args '-p 3000:3000 -p 5000:5000'
+    }
   }
   stages {
     stage('Npm Install') {
       steps {
-        sh '''
-        npm install @angular/cli
-        cd "AutoAPI"/ClientApp
-        npm install
-        '''
+        // npm install @angular/cli
+        // cd "AutoAPI"/ClientApp
+        // npm install
+        sh 'echo "Installing..."'
       }
     }
 
     stage('Build Production Mode') {
+      when {
+            branch 'master'
+       }
        steps {
-          sh '''
-          cd "AutoAPI"/ClientApp
-          npm run "build"
-          ''' 
+          // cd "AutoAPI"/ClientApp
+          // npm run "build"
+          sh 'echo "Building on master'
+       }
+
+       when {
+            branch 'TEST'
+       }
+       steps {
+          // cd "AutoAPI"/ClientApp
+          // npm run "build"
+          sh 'echo "Building on test'
        }
      }
    }

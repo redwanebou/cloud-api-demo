@@ -86,7 +86,7 @@ namespace AutoAPI.Controllers
 
             context.Person.Add(newPerson);
             context.SaveChangesAsync();
-            return Created($"Je auto met ID {newPerson.user_id} is aangemaakt.", newPerson);
+            return Created($"Persoon met ID {newPerson.user_id} is aangemaakt.", newPerson);
         }
 
         /// <summary>
