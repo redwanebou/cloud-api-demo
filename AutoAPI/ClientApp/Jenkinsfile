@@ -32,7 +32,7 @@ pipeline {
        steps {
           // cd "AutoAPI"/ClientApp
           // npm run "build"
-          sh 'echo "Deploy on master branch'
+          sh 'echo "Deploy on master branch"'
        }
      }
 
@@ -44,7 +44,7 @@ pipeline {
        steps {
           // cd "AutoAPI"/ClientApp
           // npm run "build"
-          sh 'echo "Deploy on test branch'
+          sh 'echo "Deploy on test branch"'
        }
      }
    }
