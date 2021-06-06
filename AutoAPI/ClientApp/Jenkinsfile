@@ -19,7 +19,9 @@ pipeline {
     }
 
     stage('Build Production Mode') {
-      sh 'echo "Building..."'
+      steps {
+            sh 'echo "Building..."'
+      }
      }
 
 
