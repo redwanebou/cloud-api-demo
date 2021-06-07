@@ -44,7 +44,6 @@ pipeline {
        steps {
           // cd "AutoAPI"/ClientApp
           // npm run "build"
-		  
           input message: 'Deploy on test branch'
        }
      }
