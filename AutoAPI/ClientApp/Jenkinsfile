@@ -6,7 +6,7 @@ pipeline {
     }
   }
   environment {
-    CI = 'true'
+    DOTNET_CLI_HOME = "/tmp/DOTNET_CLI_HOME"
   }
   stages {
     stage('Npm Install') {
