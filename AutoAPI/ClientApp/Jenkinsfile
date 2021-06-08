@@ -6,7 +6,7 @@ pipeline {
     }
   }
   environment {
-    DOTNET_CLI_HOME = "/tmp/DOTNET_CLI_HOME"
+    CI = 'true'
   }
   stages {
     stage('Npm Install') {
@@ -21,6 +21,9 @@ pipeline {
     stage('Build Production Mode') {
       steps {
             sh 'echo "Building..."'
+            sh 'cd ./cloud-api-2020-2021-redwanebou/ClientApp'
+            sh 'npm install'
+            sh 'dotnet publish -c Release'
       }
      }
 
