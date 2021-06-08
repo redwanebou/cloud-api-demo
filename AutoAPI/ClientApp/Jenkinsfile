@@ -21,9 +21,9 @@ pipeline {
     stage('Build Production Mode') {
       steps {
             sh 'echo "Building..."'
-            sh 'cd ./DevAutoAPI/ClientApp'
-            sh 'npm install'
-            sh 'dotnet publish -c Release'
+            //sh 'cd ./DevAutoAPI/ClientApp'
+           // sh 'npm install'
+            //sh 'dotnet publish -c Release'
       }
      }
 
