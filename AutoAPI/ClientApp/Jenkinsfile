@@ -21,7 +21,7 @@ pipeline {
     stage('Build Production Mode') {
       steps {
             sh 'echo "Building..."'
-            sh 'cd ./cloud-api-2020-2021-redwanebou/ClientApp'
+            sh 'cd ./DevAutoAPI/ClientApp'
             sh 'npm install'
             sh 'dotnet publish -c Release'
       }
