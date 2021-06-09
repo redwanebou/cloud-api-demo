@@ -1,23 +1,47 @@
 pipeline {
-  agent { node { label 'master' }}
+  agent {
+    dockerfile {
+      filename 'Dockerfile'
+      args '-p 3000:3000 -p 5000:5000'
+    }
+  }
   tools { nodejs "redwaneJS" }
+  environment {
+    CI = 'true'
+  }
   stages {
     stage('Npm Install') {
       steps {
-        sh '''
-        npm install @angular/cli
-        cd "AutoAPI"/ClientApp
-        npm install
-        '''
+        sh 'echo "Installing..."'
       }
     }
 
     stage('Build Production Mode') {
+      steps {
+            sh 'echo "Building..."'
+            sh 'cd ./AutoAPI/ClientApp && npm install'
+            sh 'dotnet publish -c Release'
+      }
+     }
+
+
+    stage('Deploy to production enviroment'){
+     when {
+            branch 'master'
+       }
        steps {
-          sh '''
-          cd "AutoAPI"/ClientApp
-          npm run "build"
-          ''' 
+          input message: 'echo "Deploy to google cloud"'
+          sh 'gcloud app deploy'
+       }
+     }
+
+
+    stage('Deploy to test enviroment'){
+     when {
+            branch 'test'
+       }
+       steps {
+          input message: 'Deploy on test branch'
        }
      }
    }
