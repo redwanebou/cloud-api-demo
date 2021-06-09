@@ -7,7 +7,7 @@ export const environment = {
     audience: 'https://rcloud.eu.auth0.com/api/v2/'
   },
     URL: {
-      auto: 'https://autoapi-1337.ew.r.appspot.com/api/auto',
-      person: 'https://autoapi-1337.ew.r.appspot.com/api/person'
+      auto: 'https://auto00.ew.r.appspot.com/api/auto',
+      person: 'https://auto00.ew.r.appspot.com/api/person'
   }
 };
