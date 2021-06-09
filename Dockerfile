@@ -12,6 +12,5 @@ RUN dotnet publish -c Release -o out
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
 WORKDIR /app
 COPY --from=build-env /app/out .
-EXPOSE 8081
-ENV ASPNETCORE_URLS=http://*:8081
+EXPOSE 3000
 ENTRYPOINT ["dotnet", "AutoAPI.dll"]
