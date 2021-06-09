@@ -31,7 +31,6 @@ pipeline {
        }
        steps {
           input message: 'echo "Deploy to google cloud"'
-          sh 'docker-compose up'
        }
      }
 
