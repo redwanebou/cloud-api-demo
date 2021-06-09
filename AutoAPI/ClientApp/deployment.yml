@@ -1,0 +1,12 @@
+steps:
+  # Deploy for UI
+  - name: "gcr.io/cloud-builders/gcloud"
+    waitFor:
+      - build
+    entrypoint: bash
+    timeout: "1600s"
+    args:
+      - "-c"
+      - |
+        gcloud app deploy
+timeout: "1600s"
