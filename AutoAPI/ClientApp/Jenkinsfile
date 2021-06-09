@@ -25,7 +25,7 @@ pipeline {
            // sh 'npm install'
             //sh 'dotnet publish -c Release'
             sh 'cd ..'
-            sh 'docker build'
+            sh 'dotnet publish -c Release'
       }
      }
 
