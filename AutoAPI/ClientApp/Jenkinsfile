@@ -22,8 +22,8 @@ pipeline {
     stage('Build Production Mode') {
       steps {
             sh 'echo "Building..."'
-            sh 'cd ./AutoAPI'
-            sh 'docker build .'
+            sh 'cd ./AutoAPI/ClientApp && npm install'
+            sh 'dotnet publish -c Release'
       }
      }
 
