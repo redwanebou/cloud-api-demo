@@ -1,6 +1,7 @@
 pipeline {
   agent {
     dockerfile {
+      sh 'cd ./AutoAPI'
       filename 'Dockerfile'
       args '-p 3000:3000 -p 5000:5000'
     }
