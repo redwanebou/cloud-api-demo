@@ -24,8 +24,8 @@ pipeline {
             //sh 'cd ./DevAutoAPI/ClientApp'
            // sh 'npm install'
             //sh 'dotnet publish -c Release'
-            cd ..
-            docker build
+            sh 'cd ..'
+            sh 'docker build'
       }
      }
 
