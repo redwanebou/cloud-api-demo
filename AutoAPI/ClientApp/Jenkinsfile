@@ -12,9 +12,6 @@ pipeline {
   stages {
     stage('Npm Install') {
       steps {
-        // npm install @angular/cli
-        // cd "AutoAPI"/ClientApp
-        // npm install
         sh 'echo "Installing..."'
       }
     }
@@ -23,7 +20,7 @@ pipeline {
       steps {
             sh 'echo "Building..."'
             sh 'cd ./AutoAPI/ClientApp && npm install'
-            //sh 'dotnet publish -c Release'
+            sh 'dotnet publish -c Release'
       }
      }
 
@@ -33,9 +30,8 @@ pipeline {
             branch 'master'
        }
        steps {
-          // cd "AutoAPI"/ClientApp
-          // npm run "build"
-          sh 'echo "Deploy on master branch"'
+          input message: 'echo "Deploy to google cloud"'
+          sh 'gcloud app deploy'
        }
      }
 
@@ -45,8 +41,6 @@ pipeline {
             branch 'test'
        }
        steps {
-          // cd "AutoAPI"/ClientApp
-          // npm run "build"
           input message: 'Deploy on test branch'
        }
      }
