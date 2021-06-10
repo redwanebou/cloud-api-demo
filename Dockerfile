@@ -10,5 +10,5 @@ RUN dotnet publish -c Release -o output
 FROM mcr.microsoft.com/dotnet/core/aspnet:2.2
 WORKDIR /app
 COPY --from=build-env /app/output .
-EXPOSE 1337
+EXPOSE 3000
 ENTRYPOINT ["dotnet", "AutoAPI.dll"]
