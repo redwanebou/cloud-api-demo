@@ -1,8 +1,8 @@
 pipeline {
   agent {
     dockerfile {
-      filename 'Dockerfile'
-      args '-p 3000:3000 -p 5000:5000'
+      filename 'AutoAPI/Dockerfile'
+      // args '-p 3000:3000 -p 5000:5000'
     }
   }
   tools { nodejs "redwaneJS" }
@@ -19,8 +19,8 @@ pipeline {
     stage('Build Production Mode') {
       steps {
             sh 'echo "Building..."'
-            sh 'cd ./AutoAPI/ClientApp && npm install'
-            sh 'dotnet publish -c Release'
+            // sh 'cd ./AutoAPI/ClientApp && npm install'
+            // sh 'dotnet publish -c Release'
       }
      }
 
