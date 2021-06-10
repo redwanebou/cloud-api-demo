@@ -2,7 +2,7 @@ FROM node:alpine AS node_base
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
 COPY --from=node_base . .
 WORKDIR /app
-COPY *.csproj ./DevAutoAPI/
+COPY ./DevAutoAPI/*.csproj ./DevAutoAPI/
 RUN dotnet restore
 COPY DevAutoAPI/. ./DevAutoAPI/
 RUN dotnet publish -c Release -o output
