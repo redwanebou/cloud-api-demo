@@ -1,7 +1,7 @@
 FROM node:alpine AS node_base
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
 COPY --from=node_base . .
-WORKDIR /app
+WORKDIR /AutoAPI/app
 COPY ./AutoAPI/*.csproj ./AutoAPI/
 RUN dotnet restore
 COPY . ./
