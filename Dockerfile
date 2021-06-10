@@ -4,10 +4,11 @@ COPY --from=node_base . .
 WORKDIR /app
 COPY ./AutoAPI/*.csproj ./AutoAPI/
 RUN dotnet restore
-COPY AutoAPI/. ./AutoAPI/
+COPY . ./
 RUN dotnet publish -c Release -o output
 # Runtime image
 FROM mcr.microsoft.com/dotnet/core/aspnet:2.2
-WORKDIR /app/AutoAPI
-COPY --from=build-env /app/AutoAPI/output .
+WORKDIR /app
+COPY --from=build-env /app/output .
+EXPOSE 1337
 ENTRYPOINT ["dotnet", "AutoAPI.dll"]
