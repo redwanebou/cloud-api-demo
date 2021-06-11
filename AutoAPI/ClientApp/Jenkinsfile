@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Npm Install') {
       steps {
-        //sh 'echo "Frontend package.json installeren"'
+        input message: 'echo "Frontend package.json installeren"'
         //sh 'cd ./AutoAPI/ClientApp && npm install'
       }
     }
