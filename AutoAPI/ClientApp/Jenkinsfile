@@ -2,35 +2,24 @@ pipeline {
   agent {
     dockerfile {
       filename 'Dockerfile'
-      args '-i --entrypoint='
+      args '--name testenvironment -i --entrypoint='
     }
   }
   tools { nodejs "redwaneJS" }
-  environment {
-    CI = 'true'
-  }
   stages {
     stage('Npm Install') {
       steps {
-        sh 'echo "Installing..."'
+        //sh 'echo "Frontend package.json installeren"'
+        //sh 'cd ./AutoAPI/ClientApp && npm install'
       }
     }
-
-    stage('Build Production Mode') {
-      steps {
-            sh 'echo "Building..."'
-            // sh 'cd ./AutoAPI/ClientApp && npm install'
-            // sh 'dotnet publish -c Release'
-      }
-     }
-
 
     stage('Deploy to production enviroment'){
      when {
             branch 'master'
        }
        steps {
-          input message: 'echo "Deploy to google cloud"'
+          input message: 'echo "Project is succesfull in production enviroment"'
        }
      }
 
@@ -40,7 +29,7 @@ pipeline {
             branch 'test'
        }
        steps {
-          input message: 'Deploy on test branch'
+          input message: 'echo "Project is succesfull in test enviroment'
        }
      }
    }
