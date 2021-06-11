@@ -2,7 +2,7 @@ pipeline {
   agent {
     dockerfile {
       filename 'Dockerfile'
-      args '--name testenvironment -i --entrypoint='
+      args '-p 3000:3000 -p 5000:5000 --name testenvironment -i --entrypoint='
     }
   }
   tools { nodejs "redwaneJS" }
