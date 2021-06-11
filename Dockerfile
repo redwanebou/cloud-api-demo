@@ -11,4 +11,4 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:2.2
 WORKDIR /app
 COPY --from=build-env /app/output .
 EXPOSE 3000
-ENTRYPOINT ["dotnet", "AutoAPI.dll"]
+ENTRYPOINT []
