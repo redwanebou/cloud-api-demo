@@ -2,34 +2,26 @@ pipeline {
   agent {
     dockerfile {
       filename 'Dockerfile'
-      args '-p 3000:3000 -p 5000:5000 --name ' + env.BRANCH_NAME + ' -i --entrypoint='
+      args '-p 3000:3000 -p 5000:5000 --name ' + env.BRANCH_NAME + 'env -i --entrypoint='
     }
   }
   tools { nodejs "redwaneJS" }
   stages {
-    stage('Npm Install') {
-      steps {
-        input message: 'echo "Frontend package.json installeren"'
-        //sh 'cd ./AutoAPI/ClientApp && npm install'
-      }
-    }
-
     stage('Deploy to production enviroment'){
      when {
             branch 'master'
        }
        steps {
-          input message: 'echo "Project is succesfull in production enviroment"'
+          input message: 'echo "Project has been successfully deployed in a container named " + env.BRANCH_NAME + "env"'
        }
      }
-
 
     stage('Deploy to test enviroment'){
      when {
             branch 'test'
        }
        steps {
-          input message: 'echo "Project is succesfull in test enviroment'
+         input message: 'echo "Project has been successfully deployed in a container named " + env.BRANCH_NAME + "env"'
        }
      }
    }
