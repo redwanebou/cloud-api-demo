@@ -12,7 +12,7 @@ pipeline {
             branch 'master'
        }
        steps {
-          input message: 'Project has been successfully deployed in a container named ' + env.BRANCH_NAME + 'env'
+          sh 'echo "Project has been successfully deployed in a container named " + env.BRANCH_NAME + "env"'
        }
      }
 
@@ -21,7 +21,7 @@ pipeline {
             branch 'test'
        }
        steps {
-         input message: 'Project has been successfully deployed in a container named ' + env.BRANCH_NAME + 'env'
+         sh 'echo "Project has been successfully deployed in a container named " + env.BRANCH_NAME + "env"'
        }
      }
    }
