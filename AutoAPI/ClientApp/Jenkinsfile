@@ -1,10 +1,10 @@
-pipeline {
-  agent {
-    dockerfile {
-      filename 'Dockerfile'
-      args '-p 3000:3000 -p 5000:5000 --name testenvironment -i --entrypoint='
-    }
-  }
+//pipeline {
+ // agent {
+  //  dockerfile {
+  //    filename 'Dockerfile'
+  //    args '-p 3000:3000 -p 5000:5000 --name testenvironment -i --entrypoint='
+  //  }
+  //}
   tools { nodejs "redwaneJS" }
   stages {
     stage('Npm Install') {
@@ -28,6 +28,11 @@ pipeline {
      when {
             branch 'test'
        }
+      agent {
+       dockerfile {
+       filename 'Dockerfile'
+       args '-p 3000:3000 -p 5000:5000 --name testenvironment -i --entrypoint='
+      }
        steps {
           input message: 'echo "Project is succesfull in test enviroment'
        }
